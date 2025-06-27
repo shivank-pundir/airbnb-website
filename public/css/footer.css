@@ -1,0 +1,220 @@
+footer {
+    background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+    margin-top: 3rem;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.f-info {
+    padding: 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    background-color: transparent;
+    box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.03);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decorative background elements */
+.f-info::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 56, 92, 0.03) 0%, transparent 60%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.f-info > * {
+    position: relative;
+    z-index: 1;
+}
+
+.f-info-social {
+    display: flex;
+    gap: 2rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.f-info-social i {
+    font-size: 1.8rem;
+    color: #333;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 12px;
+}
+
+.f-info-social i:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.f-info-social .fa-square-facebook:hover {
+    color: #1877f2;
+    background: rgba(24, 119, 242, 0.1);
+}
+
+.f-info-social .fa-square-instagram:hover {
+    color: #e4405f;
+    background: rgba(228, 64, 95, 0.1);
+}
+
+.f-info-social .fa-linkedin:hover {
+    color: #0077b5;
+    background: rgba(0, 119, 181, 0.1);
+}
+
+.f-info div:nth-child(2) {
+    font-size: 1rem;
+    color: #555;
+    font-weight: 500;
+    text-align: center;
+    padding: 1rem 2rem;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.f-info-links {
+    display: flex;
+    gap: 2.5rem;
+    padding: 1rem 2rem;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.f-info-links a {
+    text-decoration: none;
+    color: #444;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+}
+
+.f-info-links a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 56, 92, 0.1);
+    border-radius: 8px;
+    transform: scale(0.8);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.f-info-links a:hover {
+    color: #ff385c;
+    transform: translateY(-2px);
+}
+
+.f-info-links a:hover::before {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.f-info-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: #ff385c;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.f-info-links a:hover::after {
+    width: 80%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .f-info {
+        padding: 2rem 1rem;
+        gap: 1.5rem;
+    }
+
+    .f-info-social {
+        gap: 1.5rem;
+        padding: 0.8rem;
+    }
+
+    .f-info-social i {
+        font-size: 1.5rem;
+        padding: 0.4rem;
+    }
+
+    .f-info div:nth-child(2) {
+        font-size: 0.9rem;
+        padding: 0.8rem 1.5rem;
+    }
+
+    .f-info-links {
+        gap: 1rem;
+        padding: 0.8rem 1.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .f-info-links a {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.8rem;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    footer {
+        background: linear-gradient(to bottom, #1a1a1a, #222);
+    }
+
+    .f-info {
+        box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .f-info-social,
+    .f-info div:nth-child(2),
+    .f-info-links {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+    }
+
+    .f-info-social i {
+        color: #fff;
+    }
+
+    .f-info div:nth-child(2) {
+        color: #ddd;
+    }
+
+    .f-info-links a {
+        color: #ddd;
+    }
+
+    .f-info-links a:hover {
+        color: #ff385c;
+    }
+} 

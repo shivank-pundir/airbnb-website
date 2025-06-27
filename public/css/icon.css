@@ -1,0 +1,78 @@
+ #filters {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .filter {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 1rem 1.5rem;
+        background: #f8f9fa;
+        border-radius: 1rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
+        color: #333;
+        text-decoration: none;
+        min-width: 100px;
+    }
+
+    .filter i {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        color: rgb(20, 17, 17);
+    }
+
+    .filter p {
+        margin: 0;
+        font-weight: 600;
+    }
+
+    .filter:hover {
+        transform: translateY(-5px);
+        background: #fff3e0;
+        cursor: pointer;
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .listing-links {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .card {
+        margin-bottom: 2rem;
+        border: none;
+        border-radius: 1.25rem;
+        overflow: hidden;
+        transition: transform 0.3s;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .card:hover {
+        transform: scale(1.03);
+    }
+
+    .card-img-top {
+        object-fit: cover;
+        height: 20rem;
+    }
+
+    .card-body {
+        background-color: #fff;
+        padding: 1rem;
+    }
+
+    .card-text {
+        font-size: 1rem;
+        color: #333;
+    }
+
+    .card-text b {
+        color: #e91e63;
+    }

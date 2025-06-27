@@ -1,0 +1,80 @@
+<% layout("/layouts/boilerPlate") %>
+
+<style>
+  body {
+    background-color: #f4f4f4;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    color: #333;
+  }
+
+  .listing-links {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .card {
+    border: none;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    background-color: #fff;
+  }
+
+  .card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.12);
+  }
+
+  .card-img-top {
+    height: 20rem;
+    object-fit: cover;
+  }
+
+  .card-body {
+    padding: 1rem 1.25rem;
+  }
+
+  .card-text {
+    font-size: 1.05rem;
+    color: #333;
+  }
+
+  .card-text b {
+    color: #e91e63;
+    font-weight: 600;
+  }
+
+  .listings-container {
+    padding: 0 2rem;
+  }
+</style>
+
+<h1><%= category %> Listings</h1>
+
+<div class="listings-container row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+  <% listings.forEach(listing => { %>
+    <div class="col">
+      <a href="/listing/<%= listing._id %>" class="listing-links">
+        <div class="card">
+          <img src="<%= listing.image.url %>" class="card-img-top" alt="listing image">
+          <div class="card-body">
+            <p class="card-text">
+              <%= listing.title %><br>
+              <b>₹<%= listing.price.toLocaleString("en-IN") %></b> / night
+            </p>
+          </div>
+        </div>
+      </a>
+    </div>
+  <% }) %>
+</div>

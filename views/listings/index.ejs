@@ -1,0 +1,60 @@
+
+<% layout("/layouts/boilerPlate") %>
+
+<div id="filters">
+    <a href="/listing/filter/Trending" class="filter">
+        <i class="fa-solid fa-fire"></i>
+        <p>Trending</p>
+    </a>
+
+    <a href="/listing/filter/Mountain" class="filter">
+        <i class="fa-solid fa-mountain-sun"></i>
+        <p>Mountain</p>
+    </a>
+
+    <a href="/listing/filter/Rooms" class="filter">
+        <i class="fa-solid fa-bed"></i>
+        <p>Rooms</p>
+    </a>
+
+    <a href="/listing/filter/Iconic Cities" class="filter">
+        <i class="fa-solid fa-mountain-city"></i>
+        <p>Iconic Cities</p>
+    </a>
+
+    <a href="/listing/filter/Beachfont" class="filter">
+        <i class="fa-solid fa-umbrella-beach"></i>
+        <p>Beachfont</p>
+    </a>
+
+    <a href="/listing/filter/Castels" class="filter">
+        <i class="fa-brands fa-fort-awesome"></i>
+        <p>Castels</p>
+    </a>
+
+    <a href="/listing/filter/Boats" class="filter">
+        <i class="fa-solid fa-ship"></i>
+        <p>Boats</p>
+    </a>
+
+    <a href="/listing/filter/Treehouses" class="filter">
+        <i class="fa-solid fa-tree-city"></i>
+        <p>Treehouses</p>
+    </a>
+</div>
+
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-4">
+    <% for(let listing of allListing) { %>
+        <a href="/listing/<%= listing._id %>" class="listing-links">
+            <div class="card col">
+                <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image">
+                <div class="card-body">
+                    <p class="card-text">
+                        <%= listing.title %><br>
+                        <b>&#8377;<%= listing.price.toLocaleString("en-IN") %></b> / night
+                    </p>
+                </div>
+            </div>
+        </a>
+    <% } %>
+</div> 
