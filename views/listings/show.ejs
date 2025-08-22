@@ -14,14 +14,18 @@
                 <img src="<%= listing.image.url %>" class="card-img-top" alt="Listing Image" style="max-height: 400px; object-fit: cover;">
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
-                        <p><i>Owned by  <b><%= listing.owner.username  %></b></i></p>
+                        <% if (listing.owner && listing.owner.username) { %>
+                            <p><i>Owned by <b><%= listing.owner.username %></b></i></p>
+                        <% } else { %>
+                            <p><i>Owner information not available</i></p>
+                        <% } %>
                         <li class="list-group-item"><strong>Description:</strong> <%= listing.description %></li>
                         <li class="list-group-item"><strong>Price:</strong> ₹<%= listing.price.toLocaleString("en-IN") %></li>
                         <li class="list-group-item"><strong>Location:</strong> <%= listing.location %></li>
                         <li class="list-group-item"><strong>Country:</strong> <%= listing.country %></li>
                     </ul>
                 </div> 
-                <% if(currUser && listing.owner._id.equals(currUser._id)) {%> 
+                <% if(currUser && listing.owner && listing.owner._id && listing.owner._id.equals(currUser._id)) {%> 
                 <div class="card-footer bg-white d-flex justify-content-between">
                     <a href="/listing/<%= listing._id %>/edit" class="btn btn-warning">Edit Listing</a>
                     <form method="POST" action="/listing/<%= listing._id %>?_method=DELETE">
@@ -91,7 +95,11 @@
                         <div class="card-body">
                             <p class="starability-result" data-rating="<%= review.rating %>"></p>
                             <p class="card-text"><%= review.comment %></p>
-                            <h5><b>User:</b> <%= review.author.username %></h5>
+                            <% if (review.author && review.author.username) { %>
+                                <h5><b>User:</b> <%= review.author.username %></h5>
+                            <% } else { %>
+                                <h5><b>User:</b> Unknown User</h5>
+                            <% } %>
                         </div>
                         <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" class="px-3 pb-3">
                             <button class="btn btn-sm btn-danger">DELETE</button>

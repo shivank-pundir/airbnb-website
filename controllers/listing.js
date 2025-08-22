@@ -47,8 +47,7 @@ module.exports.addHader = wrapAsync(async (req, res) => {
   try {
    
     const { category } = req.params;
-
-
+    
   const listings = await Listing.find({ place: category });
     res.render("listings/haderIcon/tranding", {  listings, category  });
   } catch (e) {

@@ -1,17 +1,15 @@
-if (process.env.NODE_ENV !== "production") {
-    require("dotenv").config();
-}
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+require("dotenv").config();   
 
-const dbURL = process.env.ATLASDB_URL;
 
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const User = require("./models/user.js");
 const session = require("express-session");
+const Crypto = require("crypto-js");
 const MongoStore = require('connect-mongo');
 const flash = require("connect-flash");
 const passport = require("passport");
@@ -21,30 +19,25 @@ const listingRoute = require("./route/listing.js");
 const reviewRoute = require("./route/review.js");
 const UserRoute = require("./route/user.js");
 
-// Connect to MongoDB
+const dbURL = process.env.ATLASDB_URL;
 async function main() {
-  if (!dbURL) {
-    console.error("Error: MongoDB connection string is undefined. Check your .env file.");
-    process.exit(1);
-  }
-
   await mongoose.connect(dbURL);
 }
 main()
   .then(() => console.log("✅ Connected to MongoDB"))
   .catch((err) => console.error("❌ MongoDB Connection Error:", err));
 
-
-  const store = MongoStore.create({
-    mongoUrl: dbURL,
-  crypto: {
-    secret: process.env.SECRET,
+const store = MongoStore.create({
+  mongoUrl: dbURL,
+  crypto:{
+secret: process.env.SECRET,
   },
   touchAfter: 24 * 3600,
-  });
+});
+
 const sessionOption = {
   store,
-  secret:  process.env.SECRET,
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -54,7 +47,7 @@ const sessionOption = {
   },
 };
 
-store.on("error", ()=> {
+store.on("error", (err) => {
   console.log("ERROR IN MONGO-SESSION", err);
 });
 
@@ -63,7 +56,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
-app.use(express.static(path.join(__dirname, "/public")));
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use(session(sessionOption));
 app.use(flash());
