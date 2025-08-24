@@ -20,24 +20,42 @@ const reviewRoute = require("./route/review.js");
 const UserRoute = require("./route/user.js");
 
 const dbURL = process.env.ATLASDB_URL;
-async function main() {
-  await mongoose.connect(dbURL);
-}
-main()
-  .then(() => console.log("✅ Connected to MongoDB"))
-  .catch((err) => console.error("❌ MongoDB Connection Error:", err));
 
-const store = MongoStore.create({
-  mongoUrl: dbURL,
-  crypto:{
-secret: process.env.SECRET,
-  },
-  touchAfter: 24 * 3600,
-});
+async function main() {
+  if (!dbURL) {
+    console.log("⚠️  No MongoDB connection string provided. App will run without database.");
+    return;
+  }
+  
+  try {
+    await mongoose.connect(dbURL);
+    console.log("✅ Connected to MongoDB");
+  } catch (err) {
+    console.error("❌ MongoDB Connection Error:", err);
+  }
+}
+
+main();
+
+// Session store setup - only create if we have a database connection
+let store;
+if (dbURL) {
+  store = MongoStore.create({
+    mongoUrl: dbURL,
+    crypto: {
+      secret: process.env.SECRET,
+    },
+    touchAfter: 24 * 3600,
+  });
+
+  store.on("error", (err) => {
+    console.log("ERROR IN MONGO-SESSION", err);
+  });
+}
 
 const sessionOption = {
-  store,
-  secret: process.env.SECRET,
+  store: store || null,
+  secret: process.env.SECRET || 'your-secret-key-here',
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -46,10 +64,6 @@ const sessionOption = {
     httpOnly: true,
   },
 };
-
-store.on("error", (err) => {
-  console.log("ERROR IN MONGO-SESSION", err);
-});
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -68,19 +82,54 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+// Save Redirect URL Middleware (BEFORE Global Locals)
+const { saveRedirectUrl } = require("./middleware.js");
+app.use(saveRedirectUrl);
+
 // Flash Messages and Current User Middleware
 app.use((req, res, next) => {
+  console.log("🔍 Middleware running - Path:", req.path, "User:", req.user ? req.user.username : 'null');
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
-  res.locals.currUser = req.user;
-  res.locals.currentRoute = req.path;
+  res.locals.currUser = req.user || null;
+  res.locals.currentRoute = req.path || '/';
+  console.log("✅ Locals set - currUser:", res.locals.currUser ? 'defined' : 'null', "currentRoute:", res.locals.currentRoute);
+  console.log("✅ Flash messages - success:", res.locals.success, "error:", res.locals.error);
   next();
 });
-
+app.use((req, res, next) => {
+  // Ignore favicon and Chrome devtools requests
+  if (req.path === '/favicon.ico' || req.path.startsWith('/.well-known')) {
+    return res.status(204).end(); // No Content
+  }
+  next();
+});
 // Routes
 app.use("/listing", listingRoute);
 app.use("/listings/:id/reviews", reviewRoute);
-app.use("/", UserRoute);
+app.use("/user", UserRoute);
+
+// Test route to verify middleware
+app.get("/test", (req, res) => {
+  console.log("🧪 Test route accessed - Locals:", {
+    currUser: res.locals.currUser ? 'defined' : 'null',
+    currentRoute: res.locals.currentRoute,
+    success: res.locals.success,
+    error: res.locals.error
+  });
+  res.json({
+    message: "Middleware test",
+    currUser: res.locals.currUser ? 'defined' : 'null',
+    currentRoute: res.locals.currentRoute,
+    success: res.locals.success,
+    error: res.locals.error
+  });
+});
+
+// Root route
+app.get("/", (req, res) => {
+  res.redirect("/listing");
+});
 
 // Error Handler
 app.use((err, req, res, next) => {

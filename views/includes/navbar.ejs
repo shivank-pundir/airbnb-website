@@ -94,7 +94,7 @@
     <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
 
      
-   <% if (currentRoute !== '/login' && currentRoute !== '/signup') { %>
+   <% if (typeof currentRoute !== 'undefined' && currentRoute && currentRoute !== '/user/login' && currentRoute !== '/user/signup') { %>
   <form method="GET" action="/listing/search" class="search-form mx-auto" role="search">
     <input class="form-control search-input" type="search" name="q" placeholder="Search Destination" aria-label="Search" />
     <button class="btn search-button" type="submit">
@@ -111,12 +111,12 @@
   <a class="nav-link" href="/listing/new">Become a host</a>
 </div>
 
-        <% if (!currUser) { %>
+        <% if (typeof currUser === 'undefined' || !currUser) { %>
           <div class="d-flex gap-2">
-            <a class="nav-link text-primary" href="/signup">
+            <a class="nav-link text-primary" href="/user/signup">
               <i class="fa-solid fa-user-plus"></i> Signup
             </a>
-            <a class="nav-link text-success" href="/login">
+            <a class="nav-link text-success" href="/user/login">
               <i class="fa-solid fa-right-to-bracket"></i> Login
             </a>
           </div>
@@ -131,7 +131,7 @@
               <li><a class="dropdown-item" href="/user/trips"><i class="fa-solid fa-suitcase me-2"></i> My Trips</a></li>
               <li><a class="dropdown-item" href="/user/wishlist"><i class="fa-solid fa-heart me-2"></i> Wishlist</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item text-danger" href="/logout"><i class="fa-solid fa-right-from-bracket me-2"></i> Logout</a></li>
+              <li><a class="dropdown-item text-danger" href="/user/logout"><i class="fa-solid fa-right-from-bracket me-2"></i> Logout</a></li>
             </ul>
           </div>
         <% } %>

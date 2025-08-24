@@ -1,10 +1,10 @@
 const User = require("../models/user");
 
 module.exports.senderSignForm = (req, res) => {
-     res.render("user/signup.ejs", { currentRoute: "/signup", currUser: req.user });
+     res.render("user/signup.ejs", { currentRoute: "/user/signup", currUser: req.user });
   };
 
-  module.exports.signupUser =async (req, res) => {
+  module.exports.signupUser = async (req, res, next) => {
       try {
         let { username, email, password } = req.body;
         const newUser = new User({ email, username });
@@ -20,12 +20,12 @@ module.exports.senderSignForm = (req, res) => {
       
       } catch (e) {
         req.flash("error", e.message);
-        res.redirect("/signup");
+        res.redirect("/user/signup");
       }
     };
 
     module.exports.renderLoginForm = async(req, res) => {
-        res.render("user/login.ejs", { currentRoute: "/login", currUser: req.user });
+        res.render("user/login.ejs", { currentRoute: "/user/login", currUser: req.user });
       };
 
     module.exports.loginUser = async (req, res) => {
@@ -39,7 +39,7 @@ module.exports.senderSignForm = (req, res) => {
           if (err) {
             return next(err);
           }
-          req.flash("you are logout successfully");
+          req.flash("success", "You are logged out successfully");
           res.redirect("/listing");
         });
       }

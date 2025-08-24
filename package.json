@@ -26,6 +26,7 @@
     "joi": "^17.13.3",
     "method-override": "^3.0.0",
     "mongo-session": "^0.2.15",
+    "mongodb": "^6.18.0",
     "mongoose": "^8.13.1",
     "multer": "^1.4.5-lts.2",
     "multer-storage-cloudinary": "^4.0.0",

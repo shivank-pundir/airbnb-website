@@ -87,7 +87,6 @@ router.get("/", wrapAsync(listingControllers.index));
   );
   
   
- 
   
   // router.get("/", wrapAsync(async (req, res) => {
   //   res.send(" I am root");
