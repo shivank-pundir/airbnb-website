@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 require("dotenv").config();   
 
+const port = process.env.PORT || 8080;
 
 const path = require("path");
 const methodOverride = require("method-override");
@@ -158,6 +159,9 @@ app.use((err, req, res, next) => {
 });
 
 // Start Server
-app.listen(8080, () => {
-  console.log("🚀 Server is listening on port 8080");
+
+
+app.listen(port, () => {
+  console.log(`🚀 Server is listening on port ${port}`);
 });
+
