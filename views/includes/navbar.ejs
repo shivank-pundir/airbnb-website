@@ -1,142 +1,61 @@
-
-<style>
-  .search-form {
-    gap: 0.5rem;
-    display: flex;
-    justify-content: center;
-    flex: 1;
-  }
-
-  .search-input {
-    border-radius: 25px;
-    padding: 0.5rem 1rem;
-    border: 1px solid #ccc;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    width: 350px;
-    font-size: 1rem;
-  }
-
-  .search-input:focus {
-    border-color: #ff5a5f;
-    box-shadow: 0 0 0 0.2rem rgba(255, 90, 95, 0.25);
-    outline: none;
-  }
-
-  .search-button {
-    border-radius: 25px;
-    background-color: #ff5a5f;
-    color: white;
-    padding: 0.6rem 1.2rem;
-    display: flex;
-    align-items: center;
-    transition: background-color 0.3s ease;
-    font-weight: 500;
-    text-transform: capitalize;
-  }
-
-  .search-button:hover {
-    background-color: #e04848;
-  }
-
-   
-  .navbar-nav .nav-link {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-  } 
-   .listingName {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.3rem 0.8rem;
-    border-radius: 25px;
-    background-color: #f8f9fa; /* Light background */
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .listingName:hover {
-    background-color: #e9ecef;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-
-  .listingName i {
-    font-size: 1.2rem;
-    color: #dc3545; /* Bootstrap danger color */
-  }
-
-  .listingName .nav-link {
-    font-weight: 500;
-    color: #343a40 !important; /* Dark text */
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-
-  .listingName .nav-link:hover {
-    color: #dc3545 !important;
-  }
-</style>
+<link rel="stylesheet" href="/public/css/">
 
 <nav class="navbar navbar-expand-md bg-white shadow-sm sticky-top border-bottom custom-navbar">
   <div class="container-fluid d-flex justify-content-between align-items-center">
 
-    
     <a class="navbar-brand d-flex align-items-center gap-2 text-danger fw-bold" href="/listing">
       <i class="fa-solid fa-compass"></i> Airbnb
     </a>
-
 
     <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-   
     <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
 
-     
-   <% if (typeof currentRoute !== 'undefined' && currentRoute && currentRoute !== '/user/login' && currentRoute !== '/user/signup') { %>
-  <form method="GET" action="/listing/search" class="search-form mx-auto" role="search">
-    <input class="form-control search-input" type="search" name="q" placeholder="Search Destination" aria-label="Search" />
-    <button class="btn search-button" type="submit">
-      <i class="fa-solid fa-magnifying-glass me-1"></i> Search
-    </button>
-  </form>
-<% } %>
+      <% if (typeof currentRoute !== 'undefined' && currentRoute && currentRoute !== '/user/login' && currentRoute !== '/user/signup') { %>
+        <form method="GET" action="/listing/search" class="search-form mx-auto" role="search">
+          <input class="form-control search-input" type="search" name="q" placeholder="Search Destination" aria-label="Search" />
+          <button class="btn search-button" type="submit">
+            <i class="fa-solid fa-magnifying-glass me-1"></i> Search
+          </button>
+        </form>
+      <% } %>
 
+      <!-- ✅ Show Become a Host only if user is logged in -->
+      <% if (typeof currUser !== 'undefined' && currUser) { %>
+        <div class="navbar-nav ms-auto listingName">
+          <i class="fa-solid fa-house-chimney-medical"></i>
+          <a class="nav-link" href="/listing/new">Become a host</a>
+        </div>
+      <% } %>
 
- 
-     
-<div class="navbar-nav ms-auto listingName">
-  <i class="fa-solid fa-house-chimney-medical"></i>
-  <a class="nav-link" href="/listing/new">Become a host</a>
-</div>
-
-        <% if (typeof currUser === 'undefined' || !currUser) { %>
-          <div class="d-flex gap-2">
-            <a class="nav-link text-primary" href="/user/signup">
-              <i class="fa-solid fa-user-plus"></i> Signup
-            </a>
-            <a class="nav-link text-success" href="/user/login">
-              <i class="fa-solid fa-right-to-bracket"></i> Login
-            </a>
+      <% if (typeof currUser === 'undefined' || !currUser) { %>
+        <div class="d-flex gap-2">
+          <a class="nav-link text-primary" href="/user/signup">
+            <i class="fa-solid fa-user-plus"></i> Signup
+          </a>
+          <a class="nav-link text-success" href="/user/login">
+            <i class="fa-solid fa-right-to-bracket"></i> Login
+          </a>
+        </div>
+      <% } else { %>
+        <div class="dropdown">
+          <div class="user-menu d-flex align-items-center gap-2" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-bars"></i>
+            <i class="fa-solid fa-circle-user fs-5"></i>
           </div>
-        <% } else { %>
-          <div class="dropdown">
-            <div class="user-menu d-flex align-items-center gap-2" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fa-solid fa-bars"></i>
-              <i class="fa-solid fa-circle-user fs-5"></i>
-            </div>
-            <ul class="dropdown-menu dropdown-menu-end mt-2">
-              <li><a class="dropdown-item" href="/user/profile"><i class="fa-solid fa-user me-2"></i> Profile</a></li>
-              <li><a class="dropdown-item" href="/user/trips"><i class="fa-solid fa-suitcase me-2"></i> My Trips</a></li>
-              <li><a class="dropdown-item" href="/user/wishlist"><i class="fa-solid fa-heart me-2"></i> Wishlist</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item text-danger" href="/user/logout"><i class="fa-solid fa-right-from-bracket me-2"></i> Logout</a></li>
-            </ul>
-          </div>
-        <% } %>
+          <ul class="dropdown-menu dropdown-menu-end mt-2">
+            <li><a class="dropdown-item" href="/user/profile"><i class="fa-solid fa-user me-2"></i> Profile</a></li>
+            <li><a class="dropdown-item" href="/user/trips"><i class="fa-solid fa-suitcase me-2"></i> My Trips</a></li>
+            <li><a class="dropdown-item" href="/user/wishlist"><i class="fa-solid fa-heart me-2"></i> Wishlist</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="/user/logout"><i class="fa-solid fa-right-from-bracket me-2"></i> Logout</a></li>
+          </ul>
+        </div>
+      <% } %>
 
-      </div>
     </div>
   </div>
 </nav>

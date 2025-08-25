@@ -42,3 +42,89 @@
     align-items: center;
     gap: 0.4rem;
   }
+
+
+@media (max-width: 992px) {
+  .search-input {
+    width: 250px;
+  }
+
+  .search-form {
+    flex: 1;
+    justify-content: center;
+    margin: 0.5rem 0;
+  }
+
+  .listingName {
+    margin-top: 0.5rem;
+    justify-content: center;
+  }
+}
+
+
+@media (max-width: 768px) {
+  
+  .search-form {
+    flex-direction: row;  
+    justify-content: center;
+    width: 100%;
+    padding: 0.3rem;
+  }
+
+  .search-input {
+    flex: 1;
+    width: auto;
+    max-width: 70%; /* prevents overflow */
+    border-radius: 25px;
+    font-size: 0.95rem;
+  }
+
+  .search-button {
+    flex-shrink: 0;
+    border-radius: 25px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    margin-left: 0.4rem;
+    width: auto; /* no full width */
+  }
+
+  /* Become a host */
+  .listingName {
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5rem auto;
+    padding: 0.4rem 0.8rem;
+    border-radius: 25px;
+    max-width: fit-content;
+  }
+.dropdown-navbar{
+  display: none;
+}
+  .listingName a {
+    font-size: 0.95rem;
+  }
+
+  .listingName i {
+    font-size: 1rem;
+  }
+}
+
+
+
+@media (max-width: 480px) {
+  .navbar-brand {
+    font-size: 1rem;
+  }
+
+  .listingName i {
+    font-size: 1rem;
+  }
+ 
+  
+
+  .dropdown-menu .dropdown-item {
+    padding: 0.6rem;
+  }
+}

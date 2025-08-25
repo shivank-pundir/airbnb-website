@@ -65,6 +65,7 @@ const sessionOption = {
   },
 };
 
+app.use(express.static('public'));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
@@ -78,7 +79,26 @@ app.use(flash());
 // Passport Config
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
+passport.use(new LocalStrategy({
+  usernameField: 'email',
+  passwordField: 'password'
+}, async (email, password, done) => {
+  try {
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      return done(null, false, { message: 'Incorrect email.' });
+    }
+    
+    const isMatch = await user.authenticate(password);
+    if (isMatch) {
+      return done(null, user);
+    } else {
+      return done(null, false, { message: 'Incorrect password.' });
+    }
+  } catch (err) {
+    return done(err);
+  }
+}));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
