@@ -108,8 +108,10 @@ Developed by Shivank Pundir ✨
 👉 Do you also want me to add a **step-by-step Render deployment guide** (with `.env` setup) inside this README so others can easily deploy your project?
 
 
+```
+if you want to preview the page , visit this link - 
 
-
+https://airbnb-website-2-q5ly.onrender.com
 
 
 
